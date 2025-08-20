@@ -1,26 +1,24 @@
+import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 
-# Data
-quarters = ['Q1', 'Q2', 'Q3', 'Q4']
-mrr_growth = [8.86, 9.8, 5.71, 14.87]
+# Load data
+df = pd.read_csv("data.csv")
+
+# Compute average
+average = df["MRR_Growth"].mean()
+print(f"Average MRR Growth: {average:.2f}")
+
+# Benchmark
 industry_target = 15
 
-# Calculate average (confirming)
-average_growth = np.mean(mrr_growth)
-print(f"Calculated Average MRR Growth: {average_growth:.2f}")
-
-# Plot
+# Visualization
 plt.figure(figsize=(8,5))
-plt.plot(quarters, mrr_growth, marker='o', label='MRR Growth')
-plt.axhline(y=industry_target, color='r', linestyle='--', label='Industry Target (15)')
-plt.title('2024 Quarterly MRR Growth vs Industry Benchmark')
-plt.xlabel('Quarter')
-plt.ylabel('MRR Growth (%)')
-plt.ylim(0, 20)
-plt.grid(True)
+plt.plot(df["Quarter"], df["MRR_Growth"], marker="o", label="Company MRR Growth")
+plt.axhline(industry_target, color="red", linestyle="--", label="Industry Target (15%)")
+plt.title("Quarterly MRR Growth vs Industry Target")
+plt.xlabel("Quarter")
+plt.ylabel("MRR Growth (%)")
 plt.legend()
-
-# Save figure
-plt.savefig('mrr_growth_trend.png')
+plt.tight_layout()
+plt.savefig("mrr_growth.png")
 plt.show()
